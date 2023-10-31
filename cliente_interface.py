@@ -4,6 +4,8 @@ import threading
 from tkinter import *
 from tkinter import font
 from tkinter import ttk
+from tkinter import messagebox
+
  
 PORT = 9999
 SERVER = '192.168.32.228'
@@ -186,33 +188,38 @@ class GUI:
         while True:
             try:
                 message = client.recv(1024).decode(FORMAT)
- 
-                # if the messages from the server is NAME send the client's name
                 if message == 'NAME':
                     client.send(self.name.encode(FORMAT))
                 else:
-                    # insert messages to text box
+                    # Exiba a mensagem recebida na caixa de texto
                     self.textCons.config(state=NORMAL)
-                    self.textCons.insert(END,
-                                         message+"\n\n")
- 
+                    self.textCons.insert(END, message + "\n\n")
                     self.textCons.config(state=DISABLED)
                     self.textCons.see(END)
             except:
-                # an error will be printed on the command line or console if there's an error
-                print("An error occurred!")
+                # Em caso de erro, mostre uma mensagem de erro
+                messagebox.showerror("Erro", "Mensagem não recebida")
                 client.close()
                 break
  
-    # function to send messages
+    # Função para enviar mensagens
     def sendMessage(self):
         self.textCons.config(state=DISABLED)
         while True:
             msg = (f"{self.msg}").encode(FORMAT)
             send_len = str(len(msg)).encode(FORMAT)
             send_len += b' ' * (HEADER - len(send_len))
-            client.send(send_len)
-            client.send(msg)
+            try:
+                client.send(send_len)
+                client.send(msg)
+                # Exiba a mensagem enviada na caixa de texto
+                self.textCons.config(state=NORMAL)
+                self.textCons.insert(END, f"Você: {self.msg}\n\n")
+                self.textCons.config(state=DISABLED)
+                self.textCons.see(END)
+            except:
+                # Em caso de erro, mostre uma mensagem de erro
+                messagebox.showerror("Erro", "Mensagem não enviada")
             break
  
  
