@@ -8,7 +8,7 @@ from tkinter import messagebox
 
  
 PORT = 9999
-SERVER = '192.168.32.228'
+SERVER = 'localhost'
 ADDRESS = (SERVER, PORT)
 FORMAT = "utf-8"
 HEADER = 64
@@ -193,7 +193,7 @@ class GUI:
                 else:
                     # Exiba a mensagem recebida na caixa de texto
                     self.textCons.config(state=NORMAL)
-                    self.textCons.insert(END, message + "\n\n")
+                    self.textCons.insert(END, message + "\n")
                     self.textCons.config(state=DISABLED)
                     self.textCons.see(END)
             except:
@@ -214,7 +214,7 @@ class GUI:
                 client.send(msg)
                 # Exiba a mensagem enviada na caixa de texto
                 self.textCons.config(state=NORMAL)
-                self.textCons.insert(END, f"Você: {self.msg}\n\n")
+                self.textCons.insert(END, f"{self.name}: {self.msg}\n")
                 self.textCons.config(state=DISABLED)
                 self.textCons.see(END)
             except:
