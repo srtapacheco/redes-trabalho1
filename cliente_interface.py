@@ -7,36 +7,31 @@ from tkinter import ttk
 from tkinter import messagebox
 
  
-PORT = 9999
-SERVER = 'localhost'
+PORT = 9999 #inserir porta da maquina do servidor
+SERVER = 'localhost' #inserir ip da maquina do servidor
 ADDRESS = (SERVER, PORT)
 FORMAT = "utf-8"
 HEADER = 64
  
-# Create a new client socket
-# and connect to the server
 client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-client.connect(ADDRESS)
+client.connect(ADDRESS) 
  
  
-# GUI class for the chat
 class GUI:
-    # constructor method
+
     def __init__(self):
  
-        # chat window which is currently hidden
         self.Window = Tk()
         self.Window.withdraw()
  
-        # login window
         self.login = Toplevel()
-        # set the title
+    
         self.login.title("Login")
         self.login.resizable(width=False,
                              height=False)
         self.login.configure(width=400,
                              height=300)
-        # create a Label
+   
         self.pls = Label(self.login,
                          text="Faça o login para continuar",
                          justify=CENTER,
@@ -45,7 +40,7 @@ class GUI:
         self.pls.place(relheight=0.15,
                        relx=0.2,
                        rely=0.07)
-        # create a Label
+       
         self.labelName = Label(self.login,
                                text="Nome: ",
                                font="Helvetica 12")
@@ -54,8 +49,7 @@ class GUI:
                              relx=0.1,
                              rely=0.2)
  
-        # create a entry box for
-        # tyoing the message
+      
         self.entryName = Entry(self.login,
                                font="Helvetica 14")
  
@@ -64,11 +58,10 @@ class GUI:
                              relx=0.35,
                              rely=0.2)
  
-        # set the focus of the cursor
+
         self.entryName.focus()
  
-        # create a Continue Button
-        # along with action
+  
         self.go = Button(self.login,
                          text="Entrar",
                          font="Helvetica 14 bold",
@@ -82,15 +75,15 @@ class GUI:
         self.login.destroy()
         self.layout(name)
  
-        # the thread to receive messages
+
         rcv = threading.Thread(target=self.receive)
         rcv.start()
  
-    # The main layout of the chat
+
     def layout(self, name):
  
         self.name = name
-        # to show chat window
+     
         self.Window.deiconify()
         self.Window.title("Sala de conversa")
         self.Window.resizable(width=False,
