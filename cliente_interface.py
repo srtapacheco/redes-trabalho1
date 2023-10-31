@@ -7,7 +7,7 @@ from tkinter import ttk
 from tkinter import messagebox
 
  
-PORT = 9999 #inserir porta da maquina do servidor
+PORT = 18000 #inserir porta da maquina do servidor
 SERVER = 'localhost' #inserir ip da maquina do servidor
 ADDRESS = (SERVER, PORT)
 FORMAT = "utf-8"
@@ -132,16 +132,14 @@ class GUI:
                               fg="#EAECEE",
                               font="Helvetica 13")
  
-        # place the given widget
-        # into the gui window
+
         self.entryMsg.place(relwidth=0.74,
                             relheight=0.06,
                             rely=0.008,
                             relx=0.011)
  
         self.entryMsg.focus()
- 
-        # create a Send Button
+
         self.buttonMsg = Button(self.labelBottom,
                                 text="Enviar",
                                 font="Helvetica 10 bold",
@@ -156,11 +154,9 @@ class GUI:
  
         self.textCons.config(cursor="arrow")
  
-        # create a scroll bar
         scrollbar = Scrollbar(self.textCons)
  
-        # place the scroll bar
-        # into the gui window
+
         scrollbar.place(relheight=1,
                         relx=0.974)
  
@@ -168,7 +164,6 @@ class GUI:
  
         self.textCons.config(state=DISABLED)
  
-    # function to basically start the thread for sending messages
     def sendButton(self, msg):
         self.textCons.config(state=DISABLED)
         self.msg = msg
@@ -176,7 +171,6 @@ class GUI:
         snd = threading.Thread(target=self.sendMessage)
         snd.start()
  
-    # function to receive messages
     def receive(self):
         while True:
             try:
